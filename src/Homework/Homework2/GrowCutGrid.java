@@ -6,9 +6,9 @@ package Homework.Homework2;
  * @version Starter code updated 8/28/2024 - moved graphics update to GrowCut
  * @version Starter code for HW2 first written 1/29/2024
  *
- * @author (your name)
- * @author (add any collaborators names' here, and consider adding brief explanations)
- * @version (the date)
+ * @author Joseph Barrow
+ * Uses the methods provided and an array of pixels to decide if a pixel is defeated or not.
+ * @version 1-24-2025
  */
 public class GrowCutGrid{
     //Add a private instance variable "pixels"
@@ -27,9 +27,9 @@ public class GrowCutGrid{
      */
     public GrowCutGrid(int height, int width){
         pixels = new GrowCutPixel[height][width];
-        for (GrowCutPixel[] i: pixels){
-            for (GrowCutPixel j: i){
-                j = new GrowCutPixel();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                pixels[i][j] = new GrowCutPixel();
             }
         }
     }
@@ -100,11 +100,20 @@ public class GrowCutGrid{
      */
     public static boolean attack(GrowCutPixel attacker, GrowCutPixel defender){
 
-
-
-
-
-        return false;
+        if (attacker.getLabel() == 0){
+            return false;
+        }
+        else{
+            double g = 1 - GrowCutPixel.distance(attacker, defender);
+            double attackStrength = attacker.getStrength() * g;
+            if (attackStrength > defender.getStrength()){
+                attacker.conquer(defender, attackStrength);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     /**
@@ -121,7 +130,18 @@ public class GrowCutGrid{
      *           at least that one case, and false otherwise.
      */
     public boolean attackRight(){
-        return false; //replace with your code
+        boolean retBool = false;
+
+        for (int i = 0; i < pixels.length - 2; i++) {
+            for (int j = 0; j < pixels[i].length - 1; j++) {
+                boolean t = attack(pixels[i][j], pixels[i][j + 1]);
+                if (t){
+                    retBool = true;
+                }
+            }
+        }
+
+        return retBool;
     }
 
     /**
@@ -138,7 +158,18 @@ public class GrowCutGrid{
      *           at least that one case, and false otherwise.
      */
     public boolean attackLeft(){
-        return false; //replace with your code
+        boolean retBool = false;
+
+        for (int i = 0; i < pixels.length - 1; i++) {
+            for (int j = 1; j < pixels[i].length - 1; j++) {
+                boolean t = attack(pixels[i][j], pixels[i][j - 1]);
+                if (t){
+                    retBool = true;
+                }
+            }
+        }
+
+        return retBool;
     }
 
     /**
@@ -155,7 +186,18 @@ public class GrowCutGrid{
      *           at least that one case, and false otherwise.
      */
     public boolean attackDown(){
-        return false; //replace with your code
+        boolean retBool = false;
+
+        for (int i = 0; i < pixels.length - 2; i++) {
+            for (int j = 0; j < pixels[i].length - 1; j++) {
+                boolean t = attack(pixels[i][j], pixels[i + 1][j]);
+                if (t){
+                    retBool = true;
+                }
+            }
+        }
+
+        return retBool;
     }
 
     /**
@@ -172,7 +214,18 @@ public class GrowCutGrid{
      *           at least that one case, and false otherwise.
      */
     public boolean attackUp(){
-        return false; //replace with your code
+        boolean retBool = false;
+
+        for (int i = 1; i < pixels.length - 1; i++) {
+            for (int j = 0; j < pixels[i].length - 1; j++) {
+                boolean t = attack(pixels[i][j], pixels[i - 1][j]);
+                if (t){
+                    retBool = true;
+                }
+            }
+        }
+
+        return retBool;
     }
 
     /**
@@ -185,6 +238,29 @@ public class GrowCutGrid{
      *           methods called returns true, and false otherwise.
      */
     public boolean attackAll(){
-        return false; //replace with your code to attack in each direction
+        boolean retBool = false;
+
+        boolean t = attackRight();
+        if (t){
+            retBool = true;
+        }
+
+        t = attackLeft();
+        if (t){
+            retBool = true;
+        }
+
+        t = attackUp();
+        if (t){
+            retBool = true;
+        }
+
+        t = attackDown();
+        if (t){
+            retBool = true;
+        }
+
+
+        return retBool;
     }
 }

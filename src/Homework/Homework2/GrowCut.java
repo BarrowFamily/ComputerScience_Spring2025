@@ -130,7 +130,7 @@ public class GrowCut extends JFrame implements KeyListener{
             System.out.println("Please specify the input and output filenames using args.");
             System.out.println("Attempting to use \"Benny.jpg\" and \"BennyOnly.jpg\" instead.");
             args = new String[2];
-            args[0] = "Benny.jpg";
+            args[0] = "src/Homework/Homework2/Benny.jpg";
             args[1] = "BennyOnly.jpg";
         }
         new GrowCut(args);
